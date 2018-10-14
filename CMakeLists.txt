@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   roboclaw
   rospy
   sensor_msgs
+  nav_msgs
+  xv_11_laser_driver
 )
 
 ## System dependencies are found with CMake's conventions
