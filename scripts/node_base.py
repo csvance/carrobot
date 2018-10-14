@@ -17,8 +17,8 @@ class BaseNode(object):
     # 100hz
     def _odom_callback(self, odom):
 
-        self._tf_broadcaster.sendTransform(self._base_position,
-                                           self._base_pose, imu.header.stamp,
+        self._tf_broadcaster.sendTransform(odom.pose.position,
+                                           odom.pose.orientation, imu.header.stamp,
                                            "base", "world")
 
         self._tf_broadcaster.sendTransform((0., 0., rospy.get_param('lidar_height')),
