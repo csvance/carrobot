@@ -14,7 +14,7 @@ class CarRoBotNode(object):
         rospy.Subscriber("/odom", Odometry, queue_size=100)
 
     def _odom_callback(self, odom):
-        self._tf_broadcaster.sendTransform((0., 0., rospy.get_param('lidar_height')),
+        self._tf_broadcaster.sendTransform((rospy.get_param('base_lidar_x'), 0., rospy.get_param('base_lidar_z')),
                                            (0., 0., 0., 0.),
                                            imu.header.stamp,
                                            "neato_laser", "base_link")

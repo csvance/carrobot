@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <launch>
 
+    <node pkg="carrobot" type="carrobot_node.py" name="carrobot">
+      <arg name="base_lidar_x" value="0.05"/>
+      <arg name="base_lidar_z" value="0.1">
+    </node>
+
     <arg name="dev" default="/dev/ttyUSB0"/>
     <arg name="baud" default="115200"/>
     <arg name="address" default="128"/>
