@@ -16,7 +16,7 @@ class CarRoBotNode(object):
     def _odom_callback(self, odom):
         self._tf_broadcaster.sendTransform((rospy.get_param('base_lidar_x'), 0., rospy.get_param('base_lidar_z')),
                                            (0., 0., 0., 0.),
-                                           imu.header.stamp,
+                                           odom.header.stamp,
                                            "neato_laser", "base_link")
 
 if __name__ == '__main__':
