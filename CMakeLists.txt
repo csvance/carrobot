@@ -9,7 +9,7 @@ project(carrobot)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  roboclaw
+  roboclaw_node
   rospy
   sensor_msgs
   nav_msgs
