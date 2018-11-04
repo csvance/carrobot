@@ -5,21 +5,22 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
 import tf
 import time
+import pigpio
 
 class CarRoBotNode(object):
     def __init__(self, integrate_num_samples=10):
         rospy.init_node('base')
         self._tf_broadcaster = tf.TransformBroadcaster()
 
-        rospy.Subscriber("/odom", Odometry, queue_size=100)
+        rospy.Subscriber("/odom", Odometry, self._odom_callback, queue_size=100)
 
-    def _scan_callback(self, scan):
-        pass
+        pi = pigpio.pi()
+        pi.hardware_PWM(13, 100, min(1.0, rospy.get_param("~lidar_motor_pwm_duty_cycle", 0.9)) * 1000000.0)
 
     def _odom_callback(self, odom):
-        self._tf_broadcaster.sendTransform((rospy.get_param('base_lidar_x'),
-                                            rospy.get_param('base_lidar_y'),
-                                            rospy.get_param('base_lidar_z')),
+        self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x"),
+                                            rospy.get_param("~base_lidar_y"),
+                                            rospy.get_param("~base_lidar_z")),
                                            (0., 0., 0., 1.),
                                            odom.header.stamp,
                                            "neato_laser", "base_link")
@@ -27,3 +28,6 @@ class CarRoBotNode(object):
 if __name__ == '__main__':
     bot = CarRoBotNode()
     rospy.spin()
+
+    pi = pigpio.pi()
+    pi.hardware_PWM(13, 100, 0)
