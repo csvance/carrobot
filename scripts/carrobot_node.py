@@ -14,8 +14,8 @@ class CarRoBotNode(object):
 
         rospy.Subscriber("/odom", Odometry, self._odom_callback, queue_size=100)
 
-        pi = pigpio.pi()
-        pi.hardware_PWM(13, 100, min(1.0, rospy.get_param("~lidar_motor_pwm_duty_cycle", 0.9)) * 1000000.0)
+        self._pi = pigpio.pi()
+        self._pi.hardware_PWM(12, 100, min(1.0, rospy.get_param("~lidar_motor_pwm_duty_cycle", 0.9)) * 1000000.0)
 
     def _odom_callback(self, odom):
         self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x"),
@@ -25,9 +25,21 @@ class CarRoBotNode(object):
                                            odom.header.stamp,
                                            "neato_laser", "base_link")
 
+    def main(self):
+        r = rospy.Rate(10)
+
+        while not rospy.is_shutdown():
+            r.sleep()
+
+        shutdown()
+
+    def shutdown(self):
+        self._pi.hardware_PWM(13, 100, 0)
+
+
+
+
+
 if __name__ == '__main__':
     bot = CarRoBotNode()
-    rospy.spin()
-
-    pi = pigpio.pi()
-    pi.hardware_PWM(13, 100, 0)
+    bot.main()
