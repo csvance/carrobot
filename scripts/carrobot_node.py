@@ -5,6 +5,7 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 from std_msgs.msg import UInt16
+from simple_pid import PID
 import tf
 import time
 import pigpio
@@ -19,24 +20,17 @@ class CarRoBotNode(object):
         self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
         self._pi = pigpio.pi()
-        self._pi.hardware_PWM(12, 100, 0.3 * 1000000)
+
+        self._pid = PID(0.4, 0.2, 0.05, setpoint=220)
+        self._last_rpm = 0
 
     def _rpm_callback(self, rpm):
-
-        base_drive = 0.3
-
-        proportion = 220.0 / max(1.0, float(rpm.data))
-        drive = min(proportion * base_drive, 0.5)
-
-        self._pi.hardware_PWM(12, 100, drive * 1000000)
-
-
-
+        self._last_rpm = min(400.0, rpm.data)
 
     def _odom_callback(self, odom):
-        self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x"),
-                                            rospy.get_param("~base_lidar_y"),
-                                            rospy.get_param("~base_lidar_z")),
+        self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x", 0.098),
+                                            rospy.get_param("~base_lidar_y", 0.0),
+                                            rospy.get_param("~base_lidar_z", 0.08)),
                                            (0., 0., 0., 1.),
                                            odom.header.stamp,
                                            "neato_laser", "base_link")
@@ -45,6 +39,10 @@ class CarRoBotNode(object):
         r = rospy.Rate(10)
 
         while not rospy.is_shutdown():
+
+            control = max(min(1.0, self._pid(self._last_rpm) / 220.0), 0.0)
+            self._pi.hardware_PWM(12, 100, control / 2.0 * 1000000)
+
             r.sleep()
 
         shutdown()
