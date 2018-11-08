@@ -21,7 +21,10 @@ class CarRoBotNode(object):
 
         self._pi = pigpio.pi()
 
-        self._pid = PID(0.4, 0.2, 0.05, setpoint=220)
+        self._pi.hardware_PWM(12, 100, 0.325 * 1000000)
+        time.sleep(5)
+
+        self._pid = PID(1.0, 0.4, 0.05, setpoint=220)
         self._last_rpm = 0
 
     def _rpm_callback(self, rpm):
@@ -41,11 +44,11 @@ class CarRoBotNode(object):
         while not rospy.is_shutdown():
 
             control = max(min(1.0, self._pid(self._last_rpm) / 220.0), 0.0)
-            self._pi.hardware_PWM(12, 100, control / 2.0 * 1000000)
+            # self._pi.hardware_PWM(12, 100, control / 2.0 * 1000000)
 
             r.sleep()
 
-        shutdown()
+        self.shutdown()
 
     def shutdown(self):
         self._pi.hardware_PWM(12, 100, 0)
