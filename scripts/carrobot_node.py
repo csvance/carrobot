@@ -3,6 +3,7 @@
 import rospy
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
+from geometry_msgs.msg import Twist
 import tf
 import time
 import pigpio
@@ -13,9 +14,10 @@ class CarRoBotNode(object):
         self._tf_broadcaster = tf.TransformBroadcaster()
 
         rospy.Subscriber("/odom", Odometry, self._odom_callback, queue_size=100)
+        self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
         self._pi = pigpio.pi()
-        self._pi.hardware_PWM(12, 100, min(1.0, rospy.get_param("~lidar_motor_pwm_duty_cycle", 0.9)) * 1000000.0)
+        self._pi.hardware_PWM(12, 100, 0.28 * 1000000)
 
     def _odom_callback(self, odom):
         self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x"),
@@ -34,7 +36,7 @@ class CarRoBotNode(object):
         shutdown()
 
     def shutdown(self):
-        self._pi.hardware_PWM(13, 100, 0)
+        self._pi.hardware_PWM(12, 100, 0)
 
 
 

@@ -50,19 +50,13 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>
-  <build_depend>roboclaw_node</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
-  <build_depend>xv_11_laser_driver</build_depend>
-  <build_depend>raspicam_node</build_depend>
   <build_export_depend>geometry_msgs</build_export_depend>
-  <build_export_depend>roboclaw_node</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <build_export_depend>nav_msgs</build_export_depend>
-  <build_export_depend>xv_11_laser_driver</build_export_depend>
-  <build_export_depend>raspicam_node</build_export_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>roboclaw_node</exec_depend>
   <exec_depend>rospy</exec_depend>
@@ -70,6 +64,10 @@
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>xv_11_laser_driver</exec_depend>
   <exec_depend>raspicam_node</exec_depend>
+  <exec_depend>gmapping</exec_depend>
+  <exec_depend>explore_lite</exec_depend>
+  <exec_depend>move_base</exec_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

@@ -14,6 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   nav_msgs
   xv_11_laser_driver
+  gmapping
+  explore_lite
+  move_base
 )
 
 ## System dependencies are found with CMake's conventions
