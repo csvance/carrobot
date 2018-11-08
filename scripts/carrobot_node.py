@@ -23,12 +23,13 @@ class CarRoBotNode(object):
 
     def _rpm_callback(self, rpm):
 
+        base_drive = 0.3
+
         proportion = 220.0 / max(1.0, float(rpm.data))
-        drive = max(min(1.0, proportion), 0.6)
+        drive = min(proportion * base_drive, 0.5)
 
         print("RPM: %f DRIVE: %f P: %f" % (rpm.data, drive, proportion))
-        self._pi.hardware_PWM(12, 100, 0.3 * 1000000)
-        # self._pi.hardware_PWM(12, 100, drive * 1000000)
+        self._pi.hardware_PWM(12, 100, drive * 1000000)
 
 
 
