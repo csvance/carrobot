@@ -23,8 +23,7 @@ class CarRoBotNode(object):
 
         self._last_rpm = 0
 
-        self._pid = PID(0.1, 0.1, 0.01, setpoint=220)
-        # self._pi.hardware_PWM(12, 100, 0.315 * 1000000)
+        self._pid = PID(0.1, 0.15, 0.01, setpoint=220)
 
     def _rpm_callback(self, rpm):
         self._last_rpm = min(400.0, rpm.data)
@@ -42,10 +41,9 @@ class CarRoBotNode(object):
 
         while not rospy.is_shutdown():
 
-            control = max(min(1.0, self._pid(self._last_rpm) / 220.0), 0.0)
-
-            print("CTRL: %f RPM: %d" % (control, self._last_rpm))
-            self._pi.hardware_PWM(12, 100, control * 1000000)
+            if(rospy.get_param("~lidar_rpm_control", 1) == 1):
+                control = max(min(1.0, self._pid(self._last_rpm) / 220.0), 0.0)
+                self._pi.hardware_PWM(12, 100, control / 2.0 * 1000000)
 
             r.sleep()
 

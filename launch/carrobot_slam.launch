@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+<include file="carrobot.launch"/>
+<include file="roboclaw.launch"/>
+<include file="lidar.launch"/>
+<include file="mapping.launch"/>
+
+</launch>

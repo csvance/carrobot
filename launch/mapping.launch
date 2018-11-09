@@ -1,16 +1,6 @@
 <?xml version="1.0"?>
 <launch>
 
-    <include file="carrobot_hardware.launch"/>
-
-    <node pkg="move_base" type="move_base" name="move_base" output="screen">
-      <rosparam file="$(find carrobot)/nav/costmap_common_params.yaml" command="load" ns="global_costmap" />
-      <rosparam file="$(find carrobot)/nav/costmap_common_params.yaml" command="load" ns="local_costmap" />
-      <rosparam file="$(find carrobot)/nav/local_costmap_params.yaml" command="load" />
-      <rosparam file="$(find carrobot)/nav/global_costmap_params.yaml" command="load" />
-      <rosparam file="$(find carrobot)/nav/base_local_planner_params.yaml" command="load" />
-    </node>
-
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
       <param name="map_update_interval" value="5.0"/>
       <param name="maxUrange" value="16.0"/>
@@ -31,10 +21,10 @@
       <param name="temporalUpdate" value="3.0"/>
       <param name="resampleThreshold" value="0.5"/>
       <param name="particles" value="30"/>
-      <param name="xmin" value="-50.0"/>
-      <param name="ymin" value="-50.0"/>
-      <param name="xmax" value="50.0"/>
-      <param name="ymax" value="50.0"/>
+      <param name="xmin" value="-15.0"/>
+      <param name="ymin" value="-15.0"/>
+      <param name="xmax" value="15.0"/>
+      <param name="ymax" value="15.0"/>
       <param name="delta" value="0.05"/>
       <param name="llsamplerange" value="0.01"/>
       <param name="llsamplestep" value="0.01"/>
