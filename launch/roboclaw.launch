@@ -5,8 +5,8 @@
 <arg name="baud" default="38400"/>
 <arg name="address" default="128"/>
 <arg name="max_speed" default="2.0"/>
-<arg name="ticks_per_meter" default="30307.692307692305"/>
-<arg name="base_width" default="0.155"/>
+<arg name="ticks_per_meter" default="10033.127612513083"/>
+<arg name="base_width" default="0.18"/>
 <arg name="run_diag" default="true"/>
 
 <node if="$(arg run_diag)" pkg="roboclaw_node" type="roboclaw_node.py" name="roboclaw_node" output="screen">

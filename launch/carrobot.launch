@@ -2,9 +2,9 @@
 <launch>
 
       <node pkg="carrobot" type="carrobot_node.py" name="carrobot" output="screen">
-        <param name="base_lidar_x" value="-0.098"/>
+        <param name="base_lidar_x" value="-0.1"/>
         <param name="base_lidar_y" value="0.0"/>
-        <param name="base_lidar_z" value="0.08"/>
+        <param name="base_lidar_z" value="0.11"/>
         <param name="lidar_rpm_control" value="1"/>
       </node>
 

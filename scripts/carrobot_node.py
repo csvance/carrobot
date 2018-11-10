@@ -29,9 +29,9 @@ class CarRoBotNode(object):
         self._last_rpm = min(400.0, rpm.data)
 
     def _odom_callback(self, odom):
-        self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x", 0.098),
+        self._tf_broadcaster.sendTransform((rospy.get_param("~base_lidar_x", -0.1),
                                             rospy.get_param("~base_lidar_y", 0.0),
-                                            rospy.get_param("~base_lidar_z", 0.08)),
+                                            rospy.get_param("~base_lidar_z", 0.11)),
                                            (0., 0., 0., 1.),
                                            odom.header.stamp,
                                            "neato_laser", "base_link")
