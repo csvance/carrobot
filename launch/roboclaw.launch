@@ -2,12 +2,13 @@
 <launch>
 
 <arg name="dev" default="/dev/ttyS0"/>
-<arg name="baud" default="38400"/>
+<arg name="baud" default="115200"/>
 <arg name="address" default="128"/>
 <arg name="max_speed" default="2.0"/>
 <arg name="ticks_per_meter" default="10033.127612513083"/>
-<arg name="base_width" default="0.18"/>
+<arg name="base_width" default="0.16"/>
 <arg name="run_diag" default="true"/>
+<arg name="invert" default="true"/>
 
 <node if="$(arg run_diag)" pkg="roboclaw_node" type="roboclaw_node.py" name="roboclaw_node" output="screen">
     <param name="~dev" value="$(arg dev)"/>
@@ -16,6 +17,7 @@
     <param name="~max_speed" value="$(arg max_speed)"/>
     <param name="~ticks_per_meter" value="$(arg ticks_per_meter)"/>
     <param name="~base_width" value="$(arg base_width)"/>
+    <param name="~invert" value="$(arg invert)"/>
 </node>
 
 </launch>

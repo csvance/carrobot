@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <rosparam file="$(find carrobot)/nav/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find carrobot)/nav/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find carrobot)/nav/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find carrobot)/nav/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find carrobot)/nav/base_local_planner_params.yaml" command="load" />
+    <param name="controller_frequency" value="10.0"/>
+  </node>
+
+
+</launch>
