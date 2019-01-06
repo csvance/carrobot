@@ -23,7 +23,7 @@ class CarRoBotNode(object):
 
         self._last_rpm = 0
 
-        self._pid = PID(0.1, 0.15, 0.01, setpoint=220)
+        self._pid = PID(0.1, 0.20, 0.01, setpoint=240)
 
     def _rpm_callback(self, rpm):
         self._last_rpm = min(400.0, rpm.data)

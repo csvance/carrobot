@@ -7,7 +7,7 @@
     <rosparam file="$(find carrobot)/nav/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find carrobot)/nav/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find carrobot)/nav/base_local_planner_params.yaml" command="load" />
-    <param name="controller_frequency" value="10.0"/>
+    <param name="controller_frequency" value="5.0"/>
   </node>
 
 

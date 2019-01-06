@@ -9,14 +9,9 @@ project(carrobot)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  roboclaw_node
   rospy
   sensor_msgs
   nav_msgs
-  xv_11_laser_driver
-  gmapping
-  explore_lite
-  move_base
 )
 
 ## System dependencies are found with CMake's conventions

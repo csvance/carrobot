@@ -1,23 +1,15 @@
 <?xml version="1.0"?>
 <launch>
 
-<arg name="dev" default="/dev/ttyS0"/>
-<arg name="baud" default="115200"/>
-<arg name="address" default="128"/>
-<arg name="max_speed" default="2.0"/>
-<arg name="ticks_per_meter" default="10033.127612513083"/>
-<arg name="base_width" default="0.16"/>
-<arg name="run_diag" default="true"/>
-<arg name="invert" default="true"/>
+  <node pkg="roboclaw" type="diffdrive_node" name="diffdrive" output="screen">
+      <param name="~steps_per_meter" value="10033.127612513083"/>
+      <param name="~base_width" value="0.16"/>
+      <param name="~swap_motors" value="true"/>
+  </node>
 
-<node if="$(arg run_diag)" pkg="roboclaw_node" type="roboclaw_node.py" name="roboclaw_node" output="screen">
-    <param name="~dev" value="$(arg dev)"/>
-    <param name="~baud" value="$(arg baud)"/>
-    <param name="~address" value="$(arg address)"/>
-    <param name="~max_speed" value="$(arg max_speed)"/>
-    <param name="~ticks_per_meter" value="$(arg ticks_per_meter)"/>
-    <param name="~base_width" value="$(arg base_width)"/>
-    <param name="~invert" value="$(arg invert)"/>
-</node>
+  <node pkg="roboclaw" type="roboclaw_node" name="roboclaw" output="screen">
+      <param name="~serial_port" value="/dev/ttyS0"/>
+      <param name="~baudrate" value="115200"/>
+  </node>
 
 </launch>
