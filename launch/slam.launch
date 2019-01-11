@@ -7,5 +7,6 @@
 <include file="lidar.launch"/>
 <include file="mapping.launch"/>
 <include file="move_base.launch"/>
+<include file="picam.launch"/>
 
 </launch>

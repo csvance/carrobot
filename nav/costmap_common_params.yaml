@@ -1,8 +1,25 @@
 obstacle_range: 4.0
 raytrace_range: 4.0
-robot_radius: 0.16
-inflation_radius: 0.05
+robot_radius: 0.32
+inflation_radius: 0.10
 
-observation_sources: laser_scan_sensor
+observation_sources: laser_scan_sensor prox_left_sensor prox_right_sensor
 
-laser_scan_sensor: {sensor_frame: neato_laser, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+laser_scan_sensor:
+  sensor_frame: neato_laser
+  data_type: LaserScan
+  topic: scan
+  marking: true
+  clearing: true
+prox_left_sensor:
+  sensor_frame: prox_left
+  data_type: PointCloud
+  topic: prox_left
+  marking: true
+  clearing: true
+prox_right_sensor:
+  sensor_frame: prox_right
+  data_type: PointCloud
+  topic: prox_right
+  marking: true
+  clearing: true
