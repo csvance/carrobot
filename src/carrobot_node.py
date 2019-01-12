@@ -33,6 +33,8 @@ class CarRoBotNode(object):
         self._prox_left = 0
         self._prox_right = 0
 
+        self._prox_dist = 0.2
+
         self.prox_left_pub = rospy.Publisher("prox_left", PointCloud, queue_size=5)
         self.prox_right_pub = rospy.Publisher("prox_right", PointCloud, queue_size=5)
 
@@ -62,7 +64,7 @@ class CarRoBotNode(object):
         intensities = []
         for i in range(-5, 6):
             point = Point32()
-            point.x = 0.09
+            point.x = self._prox_dist
             point.y = i / 100.0
             point.z = 0.0
             pcl.points.append(point)
@@ -116,7 +118,7 @@ class CarRoBotNode(object):
                 intensities = []
                 for i in range(-5, 6):
                     point = Point32()
-                    point.x = 0.09
+                    point.x = self._prox_dist
                     point.y = i / 100.0
                     point.z = 0.0
                     pcl.points.append(point)
@@ -144,7 +146,7 @@ class CarRoBotNode(object):
                 intensities = []
                 for i in range(-5, 6):
                     point = Point32()
-                    point.x = 0.09
+                    point.x = self._prox_dist
                     point.y = i / 100.0
                     point.z = 0.0
                     pcl.points.append(point)
