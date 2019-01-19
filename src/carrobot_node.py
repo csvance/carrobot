@@ -33,7 +33,7 @@ class CarRoBotNode(object):
         self._prox_left = 0
         self._prox_right = 0
 
-        self._prox_dist = 0.2
+        self._prox_dist = 0.13
 
         self.prox_left_pub = rospy.Publisher("prox_left", PointCloud, queue_size=5)
         self.prox_right_pub = rospy.Publisher("prox_right", PointCloud, queue_size=5)
@@ -55,6 +55,7 @@ class CarRoBotNode(object):
     def _gpio_callback(self, gpio, level, tick):
 
         # We only care about the sensor being triggered
+        level = 0 if level else 1
         if level:
             return
 
@@ -65,7 +66,7 @@ class CarRoBotNode(object):
         for i in range(-5, 6):
             point = Point32()
             point.x = self._prox_dist
-            point.y = i / 100.0
+            point.y = i / 25.0
             point.z = 0.0
             pcl.points.append(point)
 
@@ -113,22 +114,29 @@ class CarRoBotNode(object):
             pcl = PointCloud()
             pcl.header.stamp = rospy.Time.now()
 
-            self._prox_left = self._pi.read(self._gpio_prox_left)
-            if self._prox_left == 0:
-                intensities = []
-                for i in range(-5, 6):
-                    point = Point32()
+            self._prox_left = 0 if self._pi.read(self._gpio_prox_left) else 1
+
+            intensities = []
+            if self._prox_right == 0:
+                r = range(-5, 6)
+            else:
+                r = range(-20, 21)
+            for i in r:
+                point = Point32()
+                if self._prox_left == 0:
                     point.x = self._prox_dist
-                    point.y = i / 100.0
-                    point.z = 0.0
-                    pcl.points.append(point)
+                else:
+                    point.x = 0.5
+                point.y = i / 25.0
+                point.z = 0.0
+                pcl.points.append(point)
 
-                    intensities.append(1.0)
+                intensities.append(1.0)
 
-                channel = ChannelFloat32()
-                channel.name = "intensity"
-                channel.values = intensities
-                pcl.channels.append(channel)
+            channel = ChannelFloat32()
+            channel.name = "intensity"
+            channel.values = intensities
+            pcl.channels.append(channel)
 
             self._tf_broadcaster.sendTransform(self._transforms['tf_base_prox_left'],
                                                (0., 0., 0., 1.),
@@ -141,22 +149,30 @@ class CarRoBotNode(object):
             pcl = PointCloud()
             pcl.header.stamp = rospy.Time.now()
 
-            self._prox_right = self._pi.read(self._gpio_prox_right)
+            self._prox_right = 0 if self._pi.read(self._gpio_prox_right) else 1
+
+            intensities = []
             if self._prox_right == 0:
-                intensities = []
-                for i in range(-5, 6):
-                    point = Point32()
+                r = range(-5, 6)
+            else:
+                r = range(-20, 21)
+
+            for i in r:
+                point = Point32()
+                if self._prox_right == 0:
                     point.x = self._prox_dist
-                    point.y = i / 100.0
-                    point.z = 0.0
-                    pcl.points.append(point)
+                else:
+                    point.x = 0.5
+                point.y = i / 25.0
+                point.z = 0.0
+                pcl.points.append(point)
 
-                    intensities.append(1.0)
+                intensities.append(1.0)
 
-                channel = ChannelFloat32()
-                channel.name = "intensity"
-                channel.values = intensities
-                pcl.channels.append(channel)
+            channel = ChannelFloat32()
+            channel.name = "intensity"
+            channel.values = intensities
+            pcl.channels.append(channel)
 
             self._tf_broadcaster.sendTransform(self._transforms['tf_base_prox_right'],
                                                (0., 0., 0., 1.),
